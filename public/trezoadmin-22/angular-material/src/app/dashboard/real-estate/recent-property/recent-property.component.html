@@ -1,0 +1,127 @@
+<mat-card
+    class="recent-property-card mb-25 border-radius d-block bg-white border-0 shadow-none"
+    [class.component-rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0">
+                Recent Property
+            </h5>
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <owl-carousel-o [options]="recentPropertySlides">
+            <ng-template carouselSlide>
+                <div class="image" style="background-image: url(images/properties/property1.jpg);"></div>
+                <div class="title d-flex align-items-center justify-content-between">
+                    <h3 class="mb-0 text-orange">
+                        $18,000
+                    </h3>
+                    <a routerLink="." mat-button>
+                        View More
+                    </a>
+                </div>
+                <span class="d-block location position-relative">
+                    <i class="material-symbols-outlined">
+                        location_on
+                    </i>
+                    35 Prince Consort Road
+                </span>
+                <ul class="mb-0 list-unstyled p-0">
+                    <li class="d-inline-block position-relative">
+                        <i class="material-symbols-outlined">
+                            bed
+                        </i>
+                        6Bed
+                    </li>
+                    <li class="d-inline-block position-relative">
+                        <i class="material-symbols-outlined">
+                            bathtub
+                        </i>
+                        5Bath
+                    </li>
+                    <li class="d-inline-block position-relative">
+                        <i class="material-symbols-outlined">
+                            square_foot
+                        </i>
+                        1800sqft
+                    </li>
+                </ul>
+            </ng-template>
+            <ng-template carouselSlide>
+                <div class="image" style="background-image: url(images/properties/property2.jpg);"></div>
+                <div class="title d-flex align-items-center justify-content-between">
+                    <h3 class="mb-0 text-orange">
+                        $220,000
+                    </h3>
+                    <a routerLink="." mat-button>
+                        View More
+                    </a>
+                </div>
+                <span class="d-block location position-relative">
+                    <i class="material-symbols-outlined">
+                        location_on
+                    </i>
+                    58 Gateway Road Portland
+                </span>
+                <ul class="mb-0 list-unstyled p-0">
+                    <li class="d-inline-block position-relative">
+                        <i class="material-symbols-outlined">
+                            bed
+                        </i>
+                        8Bed
+                    </li>
+                    <li class="d-inline-block position-relative">
+                        <i class="material-symbols-outlined">
+                            bathtub
+                        </i>
+                        6Bath
+                    </li>
+                    <li class="d-inline-block position-relative">
+                        <i class="material-symbols-outlined">
+                            square_foot
+                        </i>
+                        2000sqft
+                    </li>
+                </ul>
+            </ng-template>
+            <ng-template carouselSlide>
+                <div class="image" style="background-image: url(images/properties/property3.jpg);"></div>
+                <div class="title d-flex align-items-center justify-content-between">
+                    <h3 class="mb-0 text-orange">
+                        $350,000
+                    </h3>
+                    <a routerLink="." mat-button>
+                        View More
+                    </a>
+                </div>
+                <span class="d-block location position-relative">
+                    <i class="material-symbols-outlined">
+                        location_on
+                    </i>
+                    18 Chemin Challet
+                </span>
+                <ul class="mb-0 list-unstyled p-0">
+                    <li class="d-inline-block position-relative">
+                        <i class="material-symbols-outlined">
+                            bed
+                        </i>
+                        8Bed
+                    </li>
+                    <li class="d-inline-block position-relative">
+                        <i class="material-symbols-outlined">
+                            bathtub
+                        </i>
+                        7Bath
+                    </li>
+                    <li class="d-inline-block position-relative">
+                        <i class="material-symbols-outlined">
+                            square_foot
+                        </i>
+                        2200sqft
+                    </li>
+                </ul>
+            </ng-template>
+        </owl-carousel-o>
+    </mat-card-content>
+</mat-card>

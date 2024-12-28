@@ -1,0 +1,941 @@
+<mat-card
+    class="campaigns-card mb-25 border-radius d-block bg-white border-0 shadow-none"
+    [class.component-dark-theme]="themeService.isDark()"
+    [class.component-rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0">
+                Campaigns
+            </h5>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <button class="add-btn" type="button" mat-button (click)="toggleClass()">
+                <i class="material-symbols-outlined">
+                    add
+                </i>
+                Add Campaign
+            </button>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <ul class="campaigns-tabs p-0 mt-0 list-unstyled">
+            <li class="d-inline-block">
+                <button id="tab1" (click)="switchTab($event, 'tab1')" type="button" mat-button [ngClass]="{'active': currentTab === 'tab1'}">
+                    All ({{ dataSource.length }})
+                </button>
+            </li>
+            <li class="d-inline-block">
+                <button id="tab2" (click)="switchTab($event, 'tab2')" type="button" mat-button [ngClass]="{'active': currentTab === 'tab2'}">
+                    Pending ({{ pendingData.length }})
+                </button>
+            </li>
+            <li class="d-inline-block">
+                <button id="tab3" (click)="switchTab($event, 'tab3')" type="button" mat-button [ngClass]="{'active': currentTab === 'tab3'}">
+                    Completed ({{ completedData.length }})
+                </button>
+            </li>
+        </ul>
+        <div class="tab-pane" id="tab1" *ngIf="currentTab === 'tab1'">
+            <div class="table-responsive">
+                <table mat-table [dataSource]="filteredData">
+            
+                    <!-- Info Column -->
+                    <ng-container matColumnDef="info">
+                        <td mat-cell *matCellDef="let element">
+                            <div class="campaign-info position-relative">
+                                <span class="d-block text-black fw-semibold">
+                                    {{element.info.title}}
+                                </span>
+                                <span class="d-block text-body">
+                                    {{element.info.date}}
+                                </span>
+                            </div>
+                        </td>
+                    </ng-container>
+            
+                    <!-- Socials Column -->
+                    <ng-container matColumnDef="socials">
+                        <td mat-cell *matCellDef="let element">
+                            <div class="socials d-flex align-items-center">
+                                @for (socialItem of element.socials.item; track socialItem) {
+                                    <a [href]="socialItem.link" class="d-inline-block" target="_blank">
+                                        <img [src]="socialItem.icon" alt="social">
+                                    </a>
+                                }
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Status Column -->
+                    <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Status
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <span class="trezo-badge rejected border-radius-0 fw-medium" *ngIf="element.status.liveNow">
+                                Live Now
+                            </span>
+                            <span class="trezo-badge shipped border-radius-0 fw-medium" *ngIf="element.status.reviewing">
+                                Reviewing
+                            </span>
+                            <span class="trezo-badge border-radius-0 fw-medium" *ngIf="element.status.paused">
+                                Paused
+                            </span>
+                        </td>
+                    </ng-container>
+            
+                    <!-- Assignees Column -->
+                    <ng-container matColumnDef="assignees">
+                        <td mat-cell *matCellDef="let element">
+                            <div class="assignees d-flex align-items-center">
+                                @for (userImg of element.assignees.images; track userImg) {
+                                    <div>
+                                        <img [src]="userImg.img" class="rounded-circle" alt="user-image">
+                                    </div>
+                                }
+                                <div class="d-flex align-items-center justify-content-center rounded-circle bg-dark text-white fw-medium" *ngIf="element.assignees.number">
+                                    {{element.assignees.number}}
+                                </div>
+                            </div>
+                        </td>
+                    </ng-container>
+            
+                    <!-- Link Column -->
+                    <ng-container matColumnDef="link">
+                        <td mat-cell *matCellDef="let element">
+                            <button type="button" mat-button class="link-btn d-inline-block rounded-circle position-relative" (click)="toggleClass2()">
+                                <i class="{{element.link}}"></i>
+                            </button>
+                        </td>
+                    </ng-container>
+            
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    
+                </table>
+            </div>
+        </div>
+        <div class="tab-pane" id="tab2" *ngIf="currentTab === 'tab2'">
+            <div class="table-responsive">
+                <table mat-table [dataSource]="filteredData">
+            
+                    <!-- Info Column -->
+                    <ng-container matColumnDef="info">
+                        <td mat-cell *matCellDef="let element">
+                            <div class="campaign-info position-relative">
+                                <span class="d-block text-black fw-semibold">
+                                    {{element.info.title}}
+                                </span>
+                                <span class="d-block text-body">
+                                    {{element.info.date}}
+                                </span>
+                            </div>
+                        </td>
+                    </ng-container>
+            
+                    <!-- Socials Column -->
+                    <ng-container matColumnDef="socials">
+                        <td mat-cell *matCellDef="let element">
+                            <div class="socials d-flex align-items-center">
+                                @for (socialItem of element.socials.item; track socialItem) {
+                                    <a [href]="socialItem.link" class="d-inline-block" target="_blank">
+                                        <img [src]="socialItem.icon" alt="social">
+                                    </a>
+                                }
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Status Column -->
+                    <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Status
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <span class="trezo-badge rejected border-radius-0 fw-medium" *ngIf="element.status.liveNow">
+                                Live Now
+                            </span>
+                            <span class="trezo-badge shipped border-radius-0 fw-medium" *ngIf="element.status.reviewing">
+                                Reviewing
+                            </span>
+                            <span class="trezo-badge border-radius-0 fw-medium" *ngIf="element.status.paused">
+                                Paused
+                            </span>
+                        </td>
+                    </ng-container>
+            
+                    <!-- Assignees Column -->
+                    <ng-container matColumnDef="assignees">
+                        <td mat-cell *matCellDef="let element">
+                            <div class="assignees d-flex align-items-center">
+                                @for (userImg of element.assignees.images; track userImg) {
+                                    <div>
+                                        <img [src]="userImg.img" class="rounded-circle" alt="user-image">
+                                    </div>
+                                }
+                                <div class="d-flex align-items-center justify-content-center rounded-circle bg-dark text-white fw-medium" *ngIf="element.assignees.number">
+                                    {{element.assignees.number}}
+                                </div>
+                            </div>
+                        </td>
+                    </ng-container>
+            
+                    <!-- Link Column -->
+                    <ng-container matColumnDef="link">
+                        <td mat-cell *matCellDef="let element">
+                            <a [routerLink]="element.link" mat-button class="link-btn d-inline-block rounded-circle position-relative">
+                                <i class="ri-arrow-right-line"></i>
+                            </a>
+                        </td>
+                    </ng-container>
+            
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    
+                </table>
+            </div>
+        </div>
+        <div class="tab-pane" id="tab3" *ngIf="currentTab === 'tab3'">
+            <div class="table-responsive">
+                <table mat-table [dataSource]="filteredData">
+            
+                    <!-- Info Column -->
+                    <ng-container matColumnDef="info">
+                        <td mat-cell *matCellDef="let element">
+                            <div class="campaign-info position-relative">
+                                <span class="d-block text-black fw-semibold">
+                                    {{element.info.title}}
+                                </span>
+                                <span class="d-block text-body">
+                                    {{element.info.date}}
+                                </span>
+                            </div>
+                        </td>
+                    </ng-container>
+            
+                    <!-- Socials Column -->
+                    <ng-container matColumnDef="socials">
+                        <td mat-cell *matCellDef="let element">
+                            <div class="socials d-flex align-items-center">
+                                @for (socialItem of element.socials.item; track socialItem) {
+                                    <a [href]="socialItem.link" class="d-inline-block" target="_blank">
+                                        <img [src]="socialItem.icon" alt="social">
+                                    </a>
+                                }
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Status Column -->
+                    <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Status
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <span class="trezo-badge rejected border-radius-0 fw-medium" *ngIf="element.status.liveNow">
+                                Live Now
+                            </span>
+                            <span class="trezo-badge shipped border-radius-0 fw-medium" *ngIf="element.status.reviewing">
+                                Reviewing
+                            </span>
+                            <span class="trezo-badge border-radius-0 fw-medium" *ngIf="element.status.paused">
+                                Paused
+                            </span>
+                        </td>
+                    </ng-container>
+            
+                    <!-- Assignees Column -->
+                    <ng-container matColumnDef="assignees">
+                        <td mat-cell *matCellDef="let element">
+                            <div class="assignees d-flex align-items-center">
+                                @for (userImg of element.assignees.images; track userImg) {
+                                    <div>
+                                        <img [src]="userImg.img" class="rounded-circle" alt="user-image">
+                                    </div>
+                                }
+                                <div class="d-flex align-items-center justify-content-center rounded-circle bg-dark text-white fw-medium" *ngIf="element.assignees.number">
+                                    {{element.assignees.number}}
+                                </div>
+                            </div>
+                        </td>
+                    </ng-container>
+            
+                    <!-- Link Column -->
+                    <ng-container matColumnDef="link">
+                        <td mat-cell *matCellDef="let element">
+                            <a [routerLink]="element.link" mat-button class="link-btn d-inline-block rounded-circle position-relative">
+                                <i class="ri-arrow-right-line"></i>
+                            </a>
+                        </td>
+                    </ng-container>
+            
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    
+                </table>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>
+
+<!-- Add New Campaign -->
+<div
+    class="add-new-popup style-two"
+    [class.active]="classApplied"
+>
+    <div class="popup-dialog">
+        <mat-card class="border-radius-0 d-block bg-white border-0 shadow-none">
+            <mat-card-header>
+                <mat-card-title>
+                    <h5 class="mb-0">
+                        Create Campaign
+                    </h5>
+                </mat-card-title>
+                <mat-card-subtitle>
+                    <button
+                        mat-button
+                        (click)="toggleClass()"
+                    >
+                        <i class="ri-close-fill"></i>
+                    </button>
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <mat-stepper #stepper>
+                    <mat-step label="Campaign Details">
+                        <h5>
+                            Campaign Details
+                        </h5>
+                        <form>
+                            <mat-form-field>
+                                <mat-label>
+                                    Campaign Name *
+                                </mat-label>
+                                <input matInput value="Christmas Eve">
+                            </mat-form-field>
+                            <div class="form-group">
+                                <label class="d-block fw-medium">
+                                    Company Logo *
+                                </label>
+                                <div class="icon position-relative d-inline-block">
+                                    <div class="icon-inner d-flex align-items-center justify-content-center">
+                                        <i class="material-symbols-outlined">
+                                            perm_media
+                                        </i>
+                                    </div>
+                                    <div class="plus-icon rounded-circle bg-white text-primary d-flex align-items-center justify-content-center">
+                                        <i class="material-symbols-outlined">
+                                            add
+                                        </i>
+                                    </div>
+                                    <input type="file">
+                                </div>
+                                <span class="d-block">
+                                    Allowed file types: png, jpg, jpeg. Max size: 1 MB
+                                </span>
+                            </div>
+                            <div class="form-group">
+                                <label class="d-block fw-medium">
+                                    Campaign Goal *
+                                </label>
+                                <mat-radio-group>
+                                    <mat-radio-button value="1" checked>
+                                        <span class="d-block fw-medium text-black">
+                                            Get more visitors
+                                        </span>
+                                        <span class="d-block text-body">
+                                            Increase impression traffic onto the platform
+                                        </span>
+                                    </mat-radio-button>
+                                    <mat-radio-button value="2">
+                                        <span class="d-block fw-medium text-black">
+                                            Get more messages on chat
+                                        </span>
+                                        <span class="d-block text-body">
+                                            Increase community interaction and communication
+                                        </span>
+                                    </mat-radio-button>
+                                    <mat-radio-button value="3">
+                                        <span class="d-block fw-medium text-black">
+                                            Get more calls
+                                        </span>
+                                        <span class="d-block text-body">
+                                            Boost telecommunication feedback to provide precise and accurate information
+                                        </span>
+                                    </mat-radio-button>
+                                    <mat-radio-button value="4">
+                                        <span class="d-block fw-medium text-black">
+                                            Get more likes
+                                        </span>
+                                        <span class="d-block text-body">
+                                            Increase positive interactivity on social media platforms
+                                        </span>
+                                    </mat-radio-button>
+                                    <mat-radio-button value="5">
+                                        <span class="d-block fw-medium text-black">
+                                            Lead generation
+                                        </span>
+                                        <span class="d-block text-body">
+                                            Collect contact information for potential customers
+                                        </span>
+                                    </mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                        </form>
+                        <div class="buttons-list d-flex align-items-center justify-content-between">
+                            <span></span>
+                            <button mat-flat-button matStepperNext>
+                                Continue
+                                <i class="ri-arrow-right-line"></i>
+                            </button>
+                        </div>
+                    </mat-step>
+                    <mat-step label="Creative Uploads">
+                        <h5 class="mb-17">
+                            Upload Files
+                        </h5>
+                        <file-upload class="file-uploader" [multiple]="multiple"></file-upload>
+                        <h5 class="mb-17">
+                            Uploaded Files
+                        </h5>
+                        <div class="items-list">
+                            <div class="item d-flex align-items-center justify-content-between">
+                                <div class="title d-flex align-items-center">
+                                    <img src="images/icons/pdf.png" alt="pdf">
+                                    <div>
+                                        <span class="d-block text-black fw-medium">
+                                            Campaign Requirements
+                                        </span>
+                                        <span class="d-block">
+                                            Increase impression traffic onto the platform
+                                        </span>
+                                    </div>
+                                </div>
+                                <button type="button" mat-button>
+                                    Edit
+                                    <i class="ri-pencil-line"></i>
+                                </button>
+                            </div>
+                            <div class="item d-flex align-items-center justify-content-between">
+                                <div class="title d-flex align-items-center">
+                                    <img src="images/icons/doc.png" alt="doc">
+                                    <div>
+                                        <span class="d-block text-black fw-medium">
+                                            Campaign’s mission and vision
+                                        </span>
+                                        <span class="d-block">
+                                            Increase impression traffic onto the platform
+                                        </span>
+                                    </div>
+                                </div>
+                                <button type="button" mat-button>
+                                    Edit
+                                    <i class="ri-pencil-line"></i>
+                                </button>
+                            </div>
+                            <div class="item d-flex align-items-center justify-content-between">
+                                <div class="title d-flex align-items-center">
+                                    <img src="images/icons/gif.svg" alt="gif">
+                                    <div>
+                                        <span class="d-block text-black fw-medium">
+                                            Campaign Banner
+                                        </span>
+                                        <span class="d-block">
+                                            Increase impression traffic onto the platform
+                                        </span>
+                                    </div>
+                                </div>
+                                <button type="button" mat-button>
+                                    Edit
+                                    <i class="ri-pencil-line"></i>
+                                </button>
+                            </div>
+                            <div class="item d-flex align-items-center justify-content-between">
+                                <div class="title d-flex align-items-center">
+                                    <img src="images/icons/jpg.png" alt="jpg">
+                                    <div>
+                                        <span class="d-block text-black fw-medium">
+                                            Campaign Image
+                                        </span>
+                                        <span class="d-block">
+                                            Increase impression traffic onto the platform
+                                        </span>
+                                    </div>
+                                </div>
+                                <button type="button" mat-button>
+                                    Edit
+                                    <i class="ri-pencil-line"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="buttons-list d-flex align-items-center justify-content-between">
+                            <button mat-button color="warn" matStepperPrevious>
+                                <i class="ri-arrow-left-line"></i>
+                                Back
+                            </button>
+                            <button mat-flat-button matStepperNext>
+                                Continue
+                                <i class="ri-arrow-right-line"></i>
+                            </button>
+                        </div>
+                    </mat-step>
+                    <mat-step label="Audiences">
+                        <h5>
+                            Configure Audiences
+                        </h5>
+                        <form>
+                            <span class="d-block sub-title fw-medium">
+                                Gender
+                            </span>
+                            <mat-radio-group class="style-two">
+                                <mat-radio-button value="1" checked>
+                                    <span class="d-block fw-medium mb-0 text-black">
+                                        All
+                                    </span>
+                                </mat-radio-button>
+                                <mat-radio-button value="2">
+                                    <span class="d-block fw-medium mb-0 text-black">
+                                        Male
+                                    </span>
+                                </mat-radio-button>
+                                <mat-radio-button value="3">
+                                    <span class="d-block fw-medium mb-0 text-black">
+                                        Female
+                                    </span>
+                                </mat-radio-button>
+                            </mat-radio-group>
+                            <span class="d-block sub-title fw-medium">
+                                Age
+                            </span>
+                            <div class="range-slider">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="thumb-value d-flex align-items-center text-black fw-semibold" [style.left.%]="(startValue / 50) * 100">
+                                        {{ startValue }}
+                                    </div>
+                                    <mat-slider
+                                        min="0"
+                                        max="50"
+                                        class="slider"
+                                        [displayWith]="formatValue"
+                                    >
+                                        <input
+                                            matSliderStartThumb
+                                            [value]="startValue"
+                                            (input)="onThumbChange($event, 'start')"
+                                        >
+                                        <input
+                                            matSliderEndThumb
+                                            [value]="endValue"
+                                            (input)="onThumbChange($event, 'end')"
+                                        >
+                                    </mat-slider>
+                                    <div class="thumb-value d-flex align-items-center text-black fw-semibold" [style.left.%]="(endValue / 50) * 100">
+                                        {{ endValue }}
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="d-block sub-title fw-medium">
+                                Location
+                            </span>
+                            <mat-form-field>
+                                <mat-label>
+                                    Select
+                                </mat-label>
+                                <mat-select>
+                                    <mat-option value="1">
+                                        United States
+                                    </mat-option>
+                                    <mat-option value="2">
+                                        Switzerland
+                                    </mat-option>
+                                    <mat-option value="3">
+                                        Germany
+                                    </mat-option>
+                                    <mat-option value="4">
+                                        Sweden
+                                    </mat-option>
+                                    <mat-option value="5">
+                                        Denmark
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <span class="d-block sub-title fw-medium">
+                                Media
+                            </span>
+                            <mat-form-field>
+                                <mat-label>
+                                    Select
+                                </mat-label>
+                                <mat-select>
+                                    <mat-option value="1">
+                                        Facebook
+                                    </mat-option>
+                                    <mat-option value="2">
+                                        Instagram
+                                    </mat-option>
+                                    <mat-option value="3">
+                                        LinkedIn
+                                    </mat-option>
+                                    <mat-option value="4">
+                                        Twitter
+                                    </mat-option>
+                                    <mat-option value="5">
+                                        Threads
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <span class="d-block sub-title fw-medium">
+                                Team Member
+                            </span>
+                            <mat-form-field>
+                                <mat-label>
+                                    Select
+                                </mat-label>
+                                <mat-select multiple>
+                                    <mat-option value="1">
+                                        Olivia Smith
+                                    </mat-option>
+                                    <mat-option value="2">
+                                        Jason Smith
+                                    </mat-option>
+                                    <mat-option value="3">
+                                        Alina Lyes
+                                    </mat-option>
+                                    <mat-option value="4">
+                                        Jonathon Ronan
+                                    </mat-option>
+                                    <mat-option value="5">
+                                        Walter White
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </form>
+                        <div class="buttons-list d-flex align-items-center justify-content-between">
+                            <button mat-button color="warn" matStepperPrevious>
+                                <i class="ri-arrow-left-line"></i>
+                                Back
+                            </button>
+                            <button mat-flat-button matStepperNext>
+                                Continue
+                                <i class="ri-arrow-right-line"></i>
+                            </button>
+                        </div>
+                    </mat-step>
+                    <mat-step label="Budget Estimates">
+                        <h5>
+                            Budgets Estimates
+                        </h5>
+                        <form>
+                            <mat-radio-group class="style-three text-body">
+                                <mat-radio-button value="1" checked>
+                                    <span class="d-block fw-medium text-black">
+                                        Continuous Duration
+                                    </span>
+                                    <span class="d-block text-body">
+                                        Your Ad will run continuously for a daily budget.
+                                    </span>
+                                </mat-radio-button>
+                                <mat-radio-button value="2">
+                                    <span class="d-block fw-medium text-black">
+                                        Fixed Duration
+                                    </span>
+                                    <span class="d-block text-body">
+                                        Your Ad will run only specified dates only.
+                                    </span>
+                                </mat-radio-button>
+                            </mat-radio-group>
+                            <span class="d-block sub-title fw-medium">
+                                Daily Budget
+                            </span>
+                            <div class="range-slider">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div class="thumb-value d-flex align-items-center text-black fw-semibold" [style.left.%]="(startValue / 50) * 100">
+                                        $
+                                        {{ startValue }}
+                                    </div>
+                                    <mat-slider
+                                        min="0"
+                                        max="50"
+                                        class="slider"
+                                        [displayWith]="formatValue"
+                                    >
+                                        <input
+                                            matSliderStartThumb
+                                            [value]="startValue"
+                                            (input)="onThumbChange($event, 'start')"
+                                        >
+                                        <input
+                                            matSliderEndThumb
+                                            [value]="endValue"
+                                            (input)="onThumbChange($event, 'end')"
+                                        >
+                                    </mat-slider>
+                                    <div class="thumb-value d-flex align-items-center text-black fw-semibold" [style.left.%]="(endValue / 50) * 100">
+                                        $
+                                        {{ endValue }}
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="buttons-list d-flex align-items-center justify-content-between">
+                            <button mat-button color="warn" matStepperPrevious>
+                                <i class="ri-arrow-left-line"></i>
+                                Back
+                            </button>
+                            <button mat-flat-button matStepperNext>
+                                Continue
+                                <i class="ri-arrow-right-line"></i>
+                            </button>
+                        </div>
+                    </mat-step>
+                    <mat-step label="Completed">
+                        <div class="completed-content text-center">
+                            <img src="images/created.png" alt="created-image">
+                            <h3>
+                                Campaign Created!
+                            </h3>
+                            <p>
+                                You will receive an email with with the summary of your newly created campaign!
+                            </p>
+                            <div class="buttons-list d-flex align-items-center justify-content-center">
+                                <button mat-button color="warn" matStepperPrevious>
+                                    <i class="ri-arrow-left-line"></i>
+                                    Create New Campaign
+                                </button>
+                                <button mat-flat-button matStepperNext>
+                                    View Campaign
+                                    <i class="ri-arrow-right-line"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </mat-step>
+                </mat-stepper>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
+
+<!-- View Campaign -->
+<div
+    class="add-new-popup style-three"
+    [class.active]="classApplied2"
+>
+    <div class="popup-dialog">
+        <mat-card class="border-radius-0 d-block bg-white border-0 shadow-none">
+            <mat-card-header>
+                <mat-card-title>
+                    <div class="icon d-flex align-items-center justify-content-center">
+                        <img src="images/icons/supabase.svg" alt="supabase">
+                    </div>
+                    <div>
+                        <h5>
+                            Christmas Eve
+                        </h5>
+                        <span class="d-block fw-medium">
+                            From 10 Oct - 15 Oct, 24
+                        </span>
+                    </div>
+                </mat-card-title>
+                <mat-card-subtitle>
+                    <button
+                        mat-button
+                        (click)="toggleClass2()"
+                    >
+                        <i class="ri-close-fill"></i>
+                    </button>
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="row justify-content-center">
+                    <div class="col-lg-4 col-sm-6">
+                        <mat-card class="mb-25 border-radius d-block border-0 shadow-none">
+                            <mat-card-header>
+                                <mat-card-title>
+                                    <h5 class="mb-0">
+                                        Campaign Goal:
+                                    </h5>
+                                </mat-card-title>
+                                <mat-card-subtitle>
+                                    <button mat-button [matMenuTriggerFor]="cardHeaderMenu" class="dot-menu p-0 d-inline-block border-radius-0">
+                                        <i class="ri-more-fill"></i>
+                                    </button>
+                                    <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
+                                        <ul class="p-0 mt-0 mb-0 list-unstyled">
+                                            <li>
+                                                <button mat-menu-item>
+                                                    Update
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button mat-menu-item>
+                                                    Delete
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </mat-menu>
+                                </mat-card-subtitle>
+                            </mat-card-header>
+                            <mat-card-content>
+                                <span class="d-block text-black fw-medium mb-5">
+                                    Get more visitors
+                                </span>
+                                <p>
+                                    Increase impression traffic onto the platform
+                                </p>
+                                <div></div>
+                            </mat-card-content>
+                        </mat-card>
+                        <mat-card class="mb-25 border-radius d-block border-0 shadow-none">
+                            <mat-card-header>
+                                <mat-card-title>
+                                    <h5 class="mb-0">
+                                        Team Members:
+                                    </h5>
+                                </mat-card-title>
+                                <mat-card-subtitle>
+                                    <button mat-button [matMenuTriggerFor]="cardHeaderMenu" class="dot-menu p-0 d-inline-block border-radius-0">
+                                        <i class="ri-more-fill"></i>
+                                    </button>
+                                    <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
+                                        <ul class="p-0 mt-0 mb-0 list-unstyled">
+                                            <li>
+                                                <button mat-menu-item>
+                                                    Update
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button mat-menu-item>
+                                                    Delete
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </mat-menu>
+                                </mat-card-subtitle>
+                            </mat-card-header>
+                            <mat-card-content>
+                                <div class="team-members-list">
+                                    <div class="item d-inline-block fw-medium text-black">
+                                        <div class="d-flex align-items-center">
+                                            <img src="images/users/user1.jpg" class="rounded-circle" alt="use-image">
+                                            Jonathon Ronan
+                                        </div>
+                                    </div>
+                                    <div class="item d-inline-block fw-medium text-black">
+                                        <div class="d-flex align-items-center">
+                                            <img src="images/users/user2.jpg" class="rounded-circle" alt="use-image">
+                                            Walter White
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="height: 48px;"></div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                    <div class="col-lg-4 col-sm-6">
+                        <mat-card class="mb-25 border-radius d-block border-0 shadow-none">
+                            <mat-card-header>
+                                <mat-card-title>
+                                    <h5 class="mb-0">
+                                        Audiences:
+                                    </h5>
+                                </mat-card-title>
+                                <mat-card-subtitle>
+                                    <button mat-button [matMenuTriggerFor]="cardHeaderMenu" class="dot-menu p-0 d-inline-block border-radius-0">
+                                        <i class="ri-more-fill"></i>
+                                    </button>
+                                    <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
+                                        <ul class="p-0 mt-0 mb-0 list-unstyled">
+                                            <li>
+                                                <button mat-menu-item>
+                                                    Update
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button mat-menu-item>
+                                                    Delete
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </mat-menu>
+                                </mat-card-subtitle>
+                            </mat-card-header>
+                            <mat-card-content>
+                                <div class="audiences-list">
+                                    <div class="item">
+                                        <span class="fw-medium text-black">
+                                            Gender:
+                                        </span>
+                                        All
+                                    </div>
+                                    <div class="item">
+                                        <span class="fw-medium text-black">
+                                            Age Range:
+                                        </span>
+                                        18-60
+                                    </div>
+                                    <div class="item">
+                                        <span class="fw-medium text-black">
+                                            Location:
+                                        </span>
+                                        Canada, USA
+                                    </div>
+                                    <div class="item">
+                                        <span class="fw-medium text-black">
+                                            Media:
+                                        </span>
+                                        Facebook, Instagram
+                                    </div>
+                                </div>
+                                <div style="height: 118px;"></div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                    <div class="col-lg-4 col-sm-12">
+                        <mat-card class="mb-25 border-radius d-block border-0 shadow-none">
+                            <mat-card-header>
+                                <mat-card-title>
+                                    <h5 class="mb-0">
+                                        Uploaded Files:
+                                    </h5>
+                                </mat-card-title>
+                                <mat-card-subtitle>
+                                    <button mat-button [matMenuTriggerFor]="cardHeaderMenu" class="dot-menu p-0 d-inline-block border-radius-0">
+                                        <i class="ri-more-fill"></i>
+                                    </button>
+                                    <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
+                                        <ul class="p-0 mt-0 mb-0 list-unstyled">
+                                            <li>
+                                                <button mat-menu-item>
+                                                    Update
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button mat-menu-item>
+                                                    Delete
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </mat-menu>
+                                </mat-card-subtitle>
+                            </mat-card-header>
+                            <mat-card-content>
+                                <div class="uploaded-files-list">
+                                    <div class="item position-relative">
+                                        <img src="images/icons/pdf.png" alt="pdf">
+                                        <span class="d-block fw-medium text-black mb-5">
+                                            Campaign_Requirements.pdf
+                                        </span>
+                                        <p>
+                                            Increase impression traffic onto the platform.
+                                        </p>
+                                        <button type="button" mat-button>
+                                            <i class="ri-download-2-line"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

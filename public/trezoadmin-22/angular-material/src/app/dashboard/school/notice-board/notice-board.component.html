@@ -1,0 +1,63 @@
+<mat-card
+    class="notice-board-card mb-25 border-radius d-block bg-white border-0 shadow-none"
+    [class.component-dark-theme]="themeService.isDark()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0 fw-semibold">
+                Notice Board
+            </h5>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <a routerLink="." mat-button class="view-all-btn p-0 d-inline-block">
+                View All
+                <i class="ri-arrow-right-s-line"></i>
+            </a>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="table-style-three">
+            <div class="table-responsive">
+                <table mat-table [dataSource]="dataSource">
+
+                    <!-- Notice Column -->
+                    <ng-container matColumnDef="notice">
+                        <td mat-cell *matCellDef="let element">
+                            <div class="notice-info d-flex">
+                                <div class="icon rounded-circle d-flex align-items-center justify-content-center">
+                                    <img [src]="element.notice.img" alt="icon">
+                                </div>
+                                <div>
+                                    <a routerLink="." class="fw-semibold d-inline-block">
+                                        {{element.notice.title}}
+                                    </a>
+                                    <p>
+                                        {{element.notice.desc}}
+                                    </p>
+                                    <span class="date d-inline-block text-primary position-relative">
+                                        <i class="ri-calendar-line"></i>
+                                        {{element.notice.date}}
+                                    </span>
+                                </div>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Link Column -->
+                    <ng-container matColumnDef="link">
+                        <td mat-cell *matCellDef="let element">
+                            <a routerLink="." mat-button class="link-btn d-inline-block rounded-circle position-relative">
+                                <i class="material-symbols-outlined">
+                                    {{element.link}}
+                                </i>
+                            </a>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                </table>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

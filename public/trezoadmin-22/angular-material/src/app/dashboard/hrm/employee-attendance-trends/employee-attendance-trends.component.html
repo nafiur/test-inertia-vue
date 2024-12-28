@@ -1,0 +1,65 @@
+<mat-card
+    class="employee-attendance-trends-card mb-25 border-radius d-block bg-white border-0 shadow-none"
+    [class.component-dark-theme]="themeService.isDark()"
+    [class.component-rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0 fw-semibold">
+                Employee Attendance Trends
+            </h5>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <!-- <button type="button" mat-button class="date-btn">
+                <i class="ri-calendar-line"></i>
+                Dec 08 - Dec 14, 2024
+            </button> -->
+            <mat-form-field>
+                <i class="ri-calendar-line"></i>
+                <mat-date-range-input
+                    [formGroup]="campaignOne"
+                    [rangePicker]="campaignOnePicker"
+                    [comparisonStart]="campaignTwo.value.start"
+                    [comparisonEnd]="campaignTwo.value.end">
+                    <input matStartDate placeholder="Start date" formControlName="start">
+                    <input matEndDate placeholder="End date" formControlName="end">
+                </mat-date-range-input>
+                <mat-datepicker-toggle matIconSuffix [for]="campaignOnePicker"></mat-datepicker-toggle>
+                <mat-date-range-picker #campaignOnePicker></mat-date-range-picker>
+            </mat-form-field>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <ul class="mt-0 mb-0 list-unstyled p-0">
+            <li class="d-inline-block">
+                Avg. Daily Attend:
+                <span class="fw-semibold">
+                    320
+                </span>
+            </li>
+            <li class="d-inline-block">
+                <div class="dash"></div>
+            </li>
+            <li class="d-inline-block">
+                High. Attend:
+                <span class="fw-semibold">
+                    340
+                </span>
+                (October 5th) 
+            </li>
+            <li class="d-inline-block">
+                <div class="dash"></div>
+            </li>
+            <li class="d-inline-block">
+                Low. Attend:
+                <span class="fw-semibold">
+                    290
+                </span>
+                (October 1st)
+            </li>
+        </ul>
+        <div class="chart">
+            <div id="employee_attendance_trends_chart"></div>
+        </div>
+    </mat-card-content>
+</mat-card>

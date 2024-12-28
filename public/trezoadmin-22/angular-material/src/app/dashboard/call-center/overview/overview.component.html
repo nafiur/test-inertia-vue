@@ -1,0 +1,130 @@
+<mat-card
+    class="cc-overview-card mb-25 border-radius d-block bg-white border-0 shadow-none"
+    [class.component-dark-theme]="themeService.isDark()"
+    [class.component-rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0 fw-semibold">
+                Overview
+            </h5>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <button mat-button [matMenuTriggerFor]="cardHeaderMenu" class="card-header-menu d-inline-block border-radius">
+                This Year
+            </button>
+            <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
+                <ul class="p-0 mt-0 mb-0 list-unstyled">
+                    <li>
+                        <button mat-menu-item>
+                            This Day
+                        </button>
+                    </li>
+                    <li>
+                        <button mat-menu-item>
+                            This Week
+                        </button>
+                    </li>
+                    <li>
+                        <button mat-menu-item>
+                            This Month
+                        </button>
+                    </li>
+                    <li>
+                        <button mat-menu-item>
+                            This Year
+                        </button>
+                    </li>
+                </ul>
+            </mat-menu>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <ul class="overview-tabs row aling-items-center p-0 mt-0 mb-0 list-unstyled">
+            <li class="col-md-4">
+                <button id="tab1" (click)="switchTab($event, 'tab1')" type="button" [ngClass]="{'active': currentTab === 'tab1'}">
+                    <div class="top d-flex align-items-center justify-content-between">
+                        <div>
+                            <span class="d-block">
+                                Total Calls
+                            </span>
+                            <h5 class="mb-0 fw-semibold">
+                                26,435
+                            </h5>
+                        </div>
+                        <img src="images/icons/call5.svg" alt="call">
+                        <img src="images/icons/call4.svg" class="d-none" alt="call">
+                    </div>
+                    <span class="trending d-block fw-medium position-relative">
+                        <i class="material-symbols-outlined">
+                            trending_up
+                        </i>
+                        +15%
+                        <span class="fw-normal">
+                            last year
+                        </span>
+                    </span>
+                </button>
+            </li>
+            <li class="col-md-4">
+                <button id="tab2" (click)="switchTab($event, 'tab2')" type="button" [ngClass]="{'active': currentTab === 'tab2'}">
+                    <div class="top d-flex align-items-center justify-content-between">
+                        <div>
+                            <span class="d-block">
+                                Answered Calls
+                            </span>
+                            <h5 class="mb-0 fw-semibold">
+                                18,520
+                            </h5>
+                        </div>
+                        <img src="images/icons/call3.svg" alt="call">
+                        <img src="images/icons/call6.svg" class="d-none" alt="call">
+                    </div>
+                    <span class="trending d-block fw-medium position-relative">
+                        <i class="material-symbols-outlined">
+                            trending_up
+                        </i>
+                        +7.5%
+                        <span class="fw-normal">
+                            last year
+                        </span>
+                    </span>
+                </button>
+            </li>
+            <li class="col-md-4">
+                <button id="tab3" (click)="switchTab($event, 'tab3')" type="button" [ngClass]="{'active': currentTab === 'tab3'}">
+                    <div class="top d-flex align-items-center justify-content-between">
+                        <div>
+                            <span class="d-block">
+                                Missed Calls
+                            </span>
+                            <h5 class="mb-0 fw-semibold">
+                                3,735
+                            </h5>
+                        </div>
+                        <img src="images/icons/call7.svg" alt="call">
+                        <img src="images/icons/call8.svg" class="d-none" alt="call">
+                    </div>
+                    <span class="trending down d-block fw-medium position-relative">
+                        <i class="material-symbols-outlined">
+                            trending_down
+                        </i>
+                        -25%
+                        <span class="fw-normal">
+                            last year
+                        </span>
+                    </span>
+                </button>
+            </li>
+        </ul>
+        <div class="tab-pane" id="tab1" *ngIf="currentTab === 'tab1'">
+            <app-total-calls />
+        </div>
+        <div class="tab-pane" id="tab2" *ngIf="currentTab === 'tab2'">
+            <app-answered-calls />
+        </div>
+        <div class="tab-pane" id="tab3" *ngIf="currentTab === 'tab3'">
+            <app-missed-calls />
+        </div>
+    </mat-card-content>
+</mat-card>

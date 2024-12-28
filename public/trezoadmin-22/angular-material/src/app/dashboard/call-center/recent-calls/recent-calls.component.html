@@ -1,0 +1,151 @@
+<mat-card class="recent-calls-card mb-25 border-radius d-block bg-white border-0 shadow-none">
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0 fw-semibold">
+                Recent Calls
+            </h5>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <form class="search-box position-relative">
+                <label>
+                    <i class="material-symbols-outlined">
+                        search
+                    </i>
+                </label>
+                <input type="text" class="input-search" placeholder="Search for a name...." (keyup)="applyFilter($event)" #input>
+            </form>
+            <button mat-button [matMenuTriggerFor]="cardHeaderMenu" class="dot-menu style-two p-0 d-inline-block border-radius-0">
+                <i class="ri-more-2-fill"></i>
+            </button>
+            <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
+                <ul class="p-0 mt-0 mb-0 list-unstyled">
+                    <li>
+                        <button mat-menu-item>
+                            This Day
+                        </button>
+                    </li>
+                    <li>
+                        <button mat-menu-item>
+                            This Week
+                        </button>
+                    </li>
+                    <li>
+                        <button mat-menu-item>
+                            This Month
+                        </button>
+                    </li>
+                    <li>
+                        <button mat-menu-item>
+                            This Year
+                        </button>
+                    </li>
+                </ul>
+            </mat-menu>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="table-style-three">
+            <div class="table-responsive">
+                <table mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
+            
+                    <!-- Caller Name Column -->
+                    <ng-container matColumnDef="callerName">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Caller Name">
+                            Caller Name
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="employee-info d-flex align-items-center">
+                                <div class="img rounded-circle">
+                                    <img [src]="element.callerName.img" class="rounded-circle" alt="user-image">
+                                </div>
+                                <div>
+                                    <span class="d-block text-black fw-medium">
+                                        {{element.callerName.name}}
+                                    </span>
+                                    <span class="d-block text-body">
+                                        {{element.callerName.number}}
+                                    </span>
+                                </div>
+                            </div>
+                        </td>
+                    </ng-container>
+            
+                    <!-- Call Type Column -->
+                    <ng-container matColumnDef="callType">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Call Type">
+                            Call Type
+                        </th>
+                        <td class="fw-medium" mat-cell *matCellDef="let element">
+                            <span class="text-primary" *ngIf="element.callType.inbound">
+                                Inbound
+                            </span>
+                            <span class="text-orange" *ngIf="element.callType.outbound">
+                                Outbound
+                            </span>
+                        </td>
+                    </ng-container>
+            
+                    <!-- Duration Column -->
+                    <ng-container matColumnDef="duration">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Duration">
+                            Duration
+                        </th>
+                        <td class="fw-medium text-black" mat-cell *matCellDef="let element">
+                            {{element.duration}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Status Column -->
+                    <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Status">
+                            Status
+                        </th>
+                        <td class="fw-medium" mat-cell *matCellDef="let element">
+                            <span class="text-success" *ngIf="element.status.resolved">
+                                Resolved
+                            </span>
+                            <span class="text-orange" *ngIf="element.status.pending">
+                                Pending
+                            </span>
+                            <span class="text-purple" *ngIf="element.status.dropped">
+                                Dropped
+                            </span>
+                        </td>
+                    </ng-container>
+            
+                    <!-- Time Column -->
+                    <ng-container matColumnDef="time">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Time">
+                            Time
+                        </th>
+                        <td class="fw-medium text-black" mat-cell *matCellDef="let element">
+                            {{element.time}}
+                        </td>
+                    </ng-container>
+            
+                    <!-- CSAT Column -->
+                    <ng-container matColumnDef="csat">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by CSAT">
+                            CSAT
+                        </th>
+                        <td class="fw-medium text-black" mat-cell *matCellDef="let element">
+                            {{element.csat}}
+                        </td>
+                    </ng-container>
+            
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                    <!-- Row shown when there is no matching data. -->
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="6">
+                            No data matching the filter "{{input.value}}"
+                        </td>
+                    </tr>
+            
+                </table>
+            </div>
+            <mat-paginator [pageSizeOptions]="[4]" showFirstLastButtons></mat-paginator>
+        </div>
+    </mat-card-content>
+</mat-card>

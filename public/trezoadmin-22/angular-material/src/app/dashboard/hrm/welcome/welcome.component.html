@@ -1,0 +1,28 @@
+<mat-card
+    class="hrm-welcome-card mb-25 p-0 d-block bg-transparent border-0 shadow-none"
+    [class.component-card-borderd]="themeService.isCardBordered()"
+    [class.component-card-with-box-shadow]="themeService.isCardWithBoxShadow()"
+>
+    <mat-card-content>
+        <div class="d-lg-flex align-items-center justify-content-between">
+            <div>
+                <h5 class="fw-semibold">
+                    Welcome Back, <span class="text-primary">Olivia!</span>
+                </h5>
+                <p>
+                    Monitor and manage employee performance, attendance and more in one place.
+                </p>
+            </div>
+            <div class="buttons-list d-flex align-items-center">
+                <button type="button" mat-button>
+                    <i class="ri-vip-crown-line"></i>
+                    Plan Upgrade
+                </button>
+                <button type="button" mat-button>
+                    <i class="ri-file-download-line"></i>
+                    Export Reports
+                </button>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

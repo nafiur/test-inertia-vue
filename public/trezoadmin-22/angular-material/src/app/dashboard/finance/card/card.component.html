@@ -1,0 +1,176 @@
+<mat-card class="finance-card mb-25 border-radius d-block bg-white border-0 shadow-none">
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0">
+                Card
+            </h5>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <button class="add-btn" type="button" mat-button (click)="toggleClass()">
+                <i class="material-symbols-outlined">
+                    add
+                </i>
+                Add Card
+            </button>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="row">
+            <div class="col-sm-6">
+                <div
+                    class="card-item border-radius bg-primary"
+                    style="background-image: url(images/wallet/card1.jpg);"
+                >
+                    <div class="title d-flex align-items-center justify-content-between">
+                        <div class="d-block text-white text-xs">
+                            Debit Card
+                        </div>
+                        <div class="icon lh-1 text-white">
+                            <i class="ri-visa-fill"></i>
+                        </div>
+                    </div>
+                    <img src="images/icons/card-frame.png" alt="card-frame">
+                    <h5 class="text-white fw-semibold">
+                        5322 0520 0744 1794
+                    </h5>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="d-block text-white">
+                            David Farrior
+                        </span>
+                        <span class="d-block text-white text-xs">
+                            EXP : 12/30
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div
+                    class="card-item border-radius bg-primary"
+                    style="background-image: url(images/wallet/card2.jpg);"
+                >
+                    <div class="title d-flex align-items-center justify-content-between">
+                        <div class="d-block text-white text-xs">
+                            Virtual Card
+                        </div>
+                        <div class="icon lh-1 text-white">
+                            <i class="ri-mastercard-fill"></i>
+                        </div>
+                    </div>
+                    <img src="images/icons/card-frame.png" alt="card-frame">
+                    <h5 class="text-white fw-semibold">
+                        .... .... .... 1794
+                    </h5>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="d-block text-white">
+                            David Farrior
+                        </span>
+                        <span class="d-block text-white text-xs">
+                            EXP : 12/30
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>
+
+<!-- Add New Popup -->
+<div
+    class="add-new-popup"
+    [class.active]="classApplied"
+>
+    <div class="popup-dialog">
+        <mat-card class="border-radius d-block bg-white border-0 shadow-none">
+            <mat-card-header>
+                <mat-card-title>
+                    <h5 class="mb-0">
+                        Add New Card
+                    </h5>
+                </mat-card-title>
+                <mat-card-subtitle>
+                    <button
+                        mat-button
+                        (click)="toggleClass()"
+                    >
+                        <i class="ri-close-fill"></i>
+                    </button>
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="main-label d-block fw-medium text-black">
+                                Full Name
+                            </label>
+                            <mat-form-field>
+                                <mat-label>
+                                    Enter name
+                                </mat-label>
+                                <input matInput>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="main-label d-block fw-medium text-black">
+                                Card Number
+                            </label>
+                            <mat-form-field>
+                                <mat-label>
+                                    Enter card number
+                                </mat-label>
+                                <input matInput>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="main-label d-block fw-medium text-black">
+                                Expiry Date
+                            </label>
+                            <mat-form-field>
+                                <mat-label>mm/dd/yyyy</mat-label>
+                                <input matInput [matDatepicker]="dueDatePicker">
+                                <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
+                                <mat-datepicker-toggle matIconSuffix [for]="dueDatePicker"></mat-datepicker-toggle>
+                                <mat-datepicker #dueDatePicker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="main-label d-block fw-medium text-black">
+                                CVV
+                            </label>
+                            <mat-form-field>
+                                <mat-label>
+                                    Enter cvv
+                                </mat-label>
+                                <input matInput>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="btn-box">
+                    <button
+                        mat-button
+                        (click)="toggleClass()"
+                        color="warn"
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        mat-button
+                        color="primary"
+                    >
+                        <i class="material-symbols-outlined">
+                            add
+                        </i>
+                        Add Card
+                    </button>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

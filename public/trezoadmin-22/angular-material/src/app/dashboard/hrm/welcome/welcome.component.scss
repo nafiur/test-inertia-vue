@@ -1,0 +1,84 @@
+.hrm-welcome-card {
+    .mat-mdc-card-content {
+        h5 {
+            margin-bottom: 4px;
+            font-size: 20px;
+        }
+        .buttons-list {
+            gap: 10px;
+
+            .mat-mdc-button {
+                padding: 6px 12px;
+                color: var(--purpleColor);
+                background-color: #F3E8FF;
+
+                i {
+                    font-size: 18px;
+                }
+                &:nth-child(2) {
+                    color: var(--orangeColor);
+                    background-color: #ffe8d4;
+                }
+            }
+        }
+    }
+    &.component-card-borderd {
+        border-width: 0 !important;
+    }
+    &.component-card-with-box-shadow {
+        box-shadow: unset !important;
+    }
+}
+::ng-deep {
+    .hrm-welcome-card {
+        .mat-mdc-card-content {
+            .buttons-list {
+                .mat-mdc-button {
+                    .mdc-button__label {
+                        gap: 4px;
+                        display: flex;
+                        align-items: center;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* Max width 767px */
+@media only screen and (max-width : 767px) {
+
+    .hrm-welcome-card {
+        .mat-mdc-card-content {
+            .buttons-list {
+                margin-top: 13px;
+            }
+        }
+    }
+
+}
+
+/* Min width 576px to Max width 767px */
+@media only screen and (min-width : 576px) and (max-width : 767px) {}
+
+/* Min width 768px to Max width 991px */
+@media only screen and (min-width : 768px) and (max-width : 991px) {
+
+    .hrm-welcome-card {
+        .mat-mdc-card-content {
+            .buttons-list {
+                margin-top: 13px;
+            }
+        }
+    }
+
+}
+
+/* Min width 992px to Max width 1199px */
+@media only screen and (min-width : 992px) and (max-width : 1199px) {}
+
+/* Min width 1200px to Max width 1399px */
+@media only screen and (min-width: 1200px) and (max-width: 1399px) {}
+
+/* Min width 1600px */
+@media only screen and (min-width: 1600px) {}

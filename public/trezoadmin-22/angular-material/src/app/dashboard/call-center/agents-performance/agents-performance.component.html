@@ -1,0 +1,138 @@
+<mat-card
+    class="agents-performance-overview-card mb-25 border-radius d-block bg-white border-0 shadow-none"
+    [class.component-rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0 fw-semibold">
+                Agents Performance Overview
+            </h5>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <button mat-button [matMenuTriggerFor]="cardHeaderMenu" class="card-header-menu without-border d-inline-block border-radius">
+                Last Month
+            </button>
+            <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
+                <ul class="p-0 mt-0 mb-0 list-unstyled">
+                    <li>
+                        <button mat-menu-item>
+                            Last Day
+                        </button>
+                    </li>
+                    <li>
+                        <button mat-menu-item>
+                            Last Week
+                        </button>
+                    </li>
+                    <li>
+                        <button mat-menu-item>
+                            Last Month
+                        </button>
+                    </li>
+                    <li>
+                        <button mat-menu-item>
+                            Last Year
+                        </button>
+                    </li>
+                </ul>
+            </mat-menu>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <span class="d-block">
+            Top Performing Agent
+        </span>
+        <div class="top-agent">
+            <div class="row align-items-center">
+                <div class="col-md-5">
+                    <div class="d-flex align-items-center">
+                        <div class="caller-info d-flex align-items-center">
+                            <img src="images/users/user61.jpg" alt="user-image">
+                            <div class="position-relative">
+                                <span class="d-block fw-semibold text-black">
+                                    John Smith
+                                </span>
+                                <span class="d-block">
+                                    380 Calls
+                                </span>
+                                <div class="dot bg-success"></div>
+                                <!-- <div class="dot bg-orange"></div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-7">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <span class="d-block">
+                            Customer Satisfaction (CSAT)
+                        </span>
+                        <span class="d-block">
+                            92%
+                        </span>
+                    </div>
+                    <div class="progressbar d-flex align-items-center">
+                        <mat-progress-bar class="success-progressbar" mode="determinate" value="92"></mat-progress-bar>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="table-style-four">
+            <div class="table-responsive">
+                <table mat-table [dataSource]="dataSource">
+
+                    <!-- Caller Column -->
+                    <ng-container matColumnDef="caller">
+                        <td mat-cell *matCellDef="let element">
+                            <div class="caller-info d-flex align-items-center">
+                                <img [src]="element.caller.img" alt="user-image">
+                                <div class="position-relative">
+                                    <span class="d-block fw-medium">
+                                        {{element.caller.name}}
+                                    </span>
+                                    <span class="d-block">
+                                        {{element.caller.numberOfTimeCalls}}
+                                    </span>
+                                    <div class="dot bg-success" *ngIf="element.caller.status.online"></div>
+                                    <div class="dot bg-orange" *ngIf="element.caller.status.offline"></div>
+                                </div>
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Avg. Call Duration -->
+                    <ng-container matColumnDef="avgCallDuration">
+                        <td class="text-body" mat-cell *matCellDef="let element">
+                            Avg. Call Duration
+                            <span class="d-block fw-medium text-black">
+                                {{element.avgCallDuration}}
+                            </span>
+                        </td>
+                    </ng-container>
+
+                    <!-- FCR -->
+                    <ng-container matColumnDef="fcr">
+                        <td class="text-body" mat-cell *matCellDef="let element">
+                            FCR
+                            <span class="d-block fw-medium text-black">
+                                {{element.fcr}}
+                            </span>
+                        </td>
+                    </ng-container>
+
+                    <!-- CSAT Column -->
+                    <ng-container matColumnDef="csat">
+                        <td class="text-body" mat-cell *matCellDef="let element">
+                            CSAT
+                            <span class="d-block fw-medium text-black">
+                                {{element.csat}}
+                            </span>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                </table>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

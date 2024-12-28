@@ -1,0 +1,49 @@
+<mat-card class="todays-payment-card mb-25 border-radius d-block border-0 shadow-none">
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0 d-none">
+                Today’s Payment
+            </h5>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <button mat-button [matMenuTriggerFor]="cardHeaderMenu" class="card-header-menu style-two d-inline-block border-radius">
+                {{ selectedTimeframe }}
+            </button>
+            <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
+                <ul class="p-0 mt-0 mb-0 list-unstyled">
+                    <li>
+                        <button mat-menu-item (click)="onTimeframeChange('Weekly')">
+                            Weekly
+                        </button>
+                    </li>
+                    <li>
+                        <button mat-menu-item (click)="onTimeframeChange('Monthly')">
+                            Monthly
+                        </button>
+                    </li>
+                    <li>
+                        <button mat-menu-item (click)="onTimeframeChange('Yearly')">
+                            Yearly
+                        </button>
+                    </li>
+                </ul>
+            </mat-menu>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <span class="d-block">
+            Today’s Payment
+        </span>
+        <div class="revenue d-flex align-items-center">
+            <h3 class="mb-0 lh-1">
+                $1,528
+            </h3>
+            <span class="info-badge d-inline-block">
+                +5.4%
+            </span>
+        </div>
+        <div class="chart">
+            <div id="todays_payment_chart"></div>
+        </div>
+    </mat-card-content>
+</mat-card>

@@ -1,0 +1,123 @@
+<mat-card class="mb-25 border-radius d-block bg-white border-0 shadow-none">
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0">
+                Tracking Order
+            </h5>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <button mat-button [matMenuTriggerFor]="cardHeaderMenu" class="card-header-menu d-inline-block border-radius">
+                Last 30 Days
+            </button>
+            <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
+                <ul class="p-0 mt-0 mb-0 list-unstyled">
+                    <li>
+                        <button mat-menu-item>
+                            Last 7 Days
+                        </button>
+                    </li>
+                    <li>
+                        <button mat-menu-item>
+                            Last 15 Days
+                        </button>
+                    </li>
+                    <li>
+                        <button mat-menu-item>
+                            Last 30 Days
+                        </button>
+                    </li>
+                </ul>
+            </mat-menu>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="table-style-two">
+            <div class="table-responsive">
+                <table mat-table [dataSource]="dataSource">
+
+                    <!-- Order ID Column -->
+                    <ng-container matColumnDef="orderID">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Order ID
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="text-body">
+                            <div class="d-flex align-items-center" style="gap: 15px;">
+                                <mat-checkbox></mat-checkbox>
+                                {{element.orderID}}
+                            </div>
+                        </td>
+                    </ng-container>
+
+                    <!-- Customer Name Column -->
+                    <ng-container matColumnDef="customerName">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Customer Name
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="fw-medium">
+                            {{element.customerName}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Order Date Column -->
+                    <ng-container matColumnDef="orderDate">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Order Date
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="text-body">
+                            {{element.orderDate}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Current Location Column -->
+                    <ng-container matColumnDef="currentLocation">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Current Location
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="text-body">
+                            {{element.currentLocation}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Tracking Number Column -->
+                    <ng-container matColumnDef="trackingNumber">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Tracking Number
+                        </th>
+                        <td mat-cell *matCellDef="let element" class="text-body">
+                            {{element.trackingNumber}}
+                        </td>
+                    </ng-container>
+
+                    <!-- Status Column -->
+                    <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef>
+                            Status
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <span class="trezo-badge pFinished" *ngIf="element.status.delivered">
+                                Delivered
+                            </span>
+                            <span class="trezo-badge sPending" *ngIf="element.status.inTransit">
+                                In Transit
+                            </span>
+                            <span class="trezo-badge pPending" *ngIf="element.status.onTheWay">
+                                On The Way
+                            </span>
+                            <span class="trezo-badge" *ngIf="element.status.pending">
+                                Pending
+                            </span>
+                            <span class="trezo-badge rejected" *ngIf="element.status.cancelled">
+                                Cancelled
+                            </span>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                </table>
+            </div>
+            <mat-paginator [pageSizeOptions]="[5]" showFirstLastButtons></mat-paginator>
+        </div>
+    </mat-card-content>
+</mat-card>

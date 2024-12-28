@@ -1,0 +1,82 @@
+<mat-card
+    class="product-trade-conditions-card mb-25 border-radius d-block bg-white border-0 shadow-none"
+    [class.component-rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0">
+                Product Trade Conditions
+            </h5>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <button mat-button [matMenuTriggerFor]="cardHeaderMenu" class="card-header-menu style-two d-inline-block border-radius">
+                Monthly
+            </button>
+            <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
+                <ul class="p-0 mt-0 mb-0 list-unstyled">
+                    <li>
+                        <button mat-menu-item>
+                            Weekly
+                        </button>
+                    </li>
+                    <li>
+                        <button mat-menu-item>
+                            Monthly
+                        </button>
+                    </li>
+                    <li>
+                        <button mat-menu-item>
+                            Yearly
+                        </button>
+                    </li>
+                </ul>
+            </mat-menu>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="chart">
+            <div id="product_trade_conditions_chart"></div>
+        </div>
+        <div class="info d-md-flex align-items-center">
+            <div class="item">
+                <span class="d-block">
+                    Forecast Hours
+                </span>
+                <div class="title d-flex align-items-center">
+                    <h3 class="mb-0 lh-1">
+                        144h
+                    </h3>
+                    <span class="info-badge d-inline-block">
+                        +5.4%
+                    </span>
+                </div>
+            </div>
+            <div class="item">
+                <span class="d-block">
+                    Workflow Hours
+                </span>
+                <div class="title d-flex align-items-center">
+                    <h3 class="mb-0 lh-1">
+                        120h
+                    </h3>
+                    <span class="info-badge down d-inline-block">
+                        -3.2%
+                    </span>
+                </div>
+            </div>
+            <div class="item">
+                <span class="d-block">
+                    Forcast Income
+                </span>
+                <div class="title d-flex align-items-center">
+                    <h3 class="mb-0 lh-1">
+                        $350K
+                    </h3>
+                    <span class="info-badge d-inline-block">
+                        +3.9%
+                    </span>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

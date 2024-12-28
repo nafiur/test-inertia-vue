@@ -1,0 +1,128 @@
+<mat-card
+    class="employee-work-format-card mb-25 border-radius d-block bg-white border-0 shadow-none"
+    [class.component-rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0 fw-semibold">
+                Employee Work Format
+            </h5>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <button mat-button [matMenuTriggerFor]="cardHeaderMenu" class="dot-menu style-two p-0 d-inline-block border-radius-0">
+                <i class="ri-more-2-fill"></i>
+            </button>
+            <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
+                <ul class="p-0 mt-0 mb-0 list-unstyled">
+                    <li>
+                        <button mat-menu-item (click)="onTimeframeChange('This Day')">
+                            This Day
+                        </button>
+                    </li>
+                    <li>
+                        <button mat-menu-item (click)="onTimeframeChange('This Week')">
+                            This Week
+                        </button>
+                    </li>
+                    <li>
+                        <button mat-menu-item (click)="onTimeframeChange('This Month')">
+                            This Month
+                        </button>
+                    </li>
+                    <li>
+                        <button mat-menu-item (click)="onTimeframeChange('This Year')">
+                            This Year
+                        </button>
+                    </li>
+                </ul>
+            </mat-menu>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="chart">
+            <div id="employee_work_format_chart"></div>
+        </div>
+        <div class="basic-table table-responsive">
+            <table>
+                <tbody class="text-black">
+                    <tr>
+                        <td class="fw-medium">
+                            <div class="title d-flex align-items-center">
+                                <div class="bg-orange"></div>
+                                Remote
+                            </div>
+                        </td>
+                        <td>
+                            <span class="d-inline-block number position-relative text-success">
+                                34%
+                                <i class="material-symbols-outlined">
+                                    trending_up
+                                </i>
+                            </span>
+                        </td>
+                        <td class="fw-bold text-end">
+                            120
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-medium">
+                            <div class="title d-flex align-items-center">
+                                <div class="bg-primary"></div>
+                                In-office
+                            </div>
+                        </td>
+                        <td>
+                            <span class="d-inline-block number position-relative text-orange">
+                                46%
+                                <i class="material-symbols-outlined">
+                                    trending_down
+                                </i>
+                            </span>
+                        </td>
+                        <td class="fw-bold text-end">
+                            160
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-medium">
+                            <div class="title d-flex align-items-center">
+                                <div class="bg-success"></div>
+                                Hybrid
+                            </div>
+                        </td>
+                        <td>
+                            <span class="d-inline-block number position-relative text-success">
+                                15%
+                                <i class="material-symbols-outlined">
+                                    trending_up
+                                </i>
+                            </span>
+                        </td>
+                        <td class="fw-bold text-end">
+                            50
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="fw-medium">
+                            <div class="title d-flex align-items-center">
+                                <div class="bg-purple"></div>
+                                Shift
+                            </div>
+                        </td>
+                        <td>
+                            <span class="d-inline-block number position-relative text-orange">
+                                5%
+                                <i class="material-symbols-outlined">
+                                    trending_down
+                                </i>
+                            </span>
+                        </td>
+                        <td class="fw-bold text-end">
+                            20
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </mat-card-content>
+</mat-card>

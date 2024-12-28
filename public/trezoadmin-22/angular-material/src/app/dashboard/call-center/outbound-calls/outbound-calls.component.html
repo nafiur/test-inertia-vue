@@ -1,0 +1,71 @@
+<mat-card
+    class="outbound-calls-card mb-25 border-radius d-block bg-white border-0 shadow-none"
+    [class.component-dark-theme]="themeService.isDark()"
+    [class.component-rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0 fw-semibold">
+                Outbound Calls
+            </h5>
+            <p>
+                Summary of outgoing call efforts
+            </p>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <button mat-button [matMenuTriggerFor]="cardHeaderMenu" class="card-header-menu without-border d-inline-block border-radius">
+                {{ selectedTimeframe }}
+            </button>
+            <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
+                <ul class="p-0 mt-0 mb-0 list-unstyled">
+                    <li>
+                        <button mat-menu-item (click)="onTimeframeChange('This Day')">
+                            This Day
+                        </button>
+                    </li>
+                    <li>
+                        <button mat-menu-item (click)="onTimeframeChange('This Week')">
+                            This Week
+                        </button>
+                    </li>
+                    <li>
+                        <button mat-menu-item (click)="onTimeframeChange('This Month')">
+                            This Month
+                        </button>
+                    </li>
+                    <li>
+                        <button mat-menu-item (click)="onTimeframeChange('This Year')">
+                            This Year
+                        </button>
+                    </li>
+                </ul>
+            </mat-menu>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="chart">
+            <div id="outbound_calls_chart"></div>
+        </div>
+        <div class="info d-flex align-items-center">
+            <div class="item d-flex align-items-center">
+                <div class="icon d-flex align-items-center justify-content-center">
+                    <img src="images/icons/call2.svg" alt="call2">
+                </div>
+                <div>
+                    <h5 class="fw-semibold lh-1">
+                        890
+                    </h5>
+                    <span class="d-block">
+                        Last month
+                    </span>
+                </div>
+            </div>
+            <span class="trending down d-block text-black fw-medium position-relative">
+                <i class="material-symbols-outlined">
+                    trending_down
+                </i>
+                -5.8%
+            </span>
+        </div>
+    </mat-card-content>
+</mat-card>

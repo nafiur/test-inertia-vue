@@ -1,0 +1,103 @@
+<mat-card
+    class="top-nfts-card mb-25 border-radius d-block bg-white border-0 shadow-none"
+    [class.component-rtl-enabled]="themeService.isRTLEnabled()"
+>
+    <mat-card-header>
+        <mat-card-title>
+            <h5 class="mb-0">
+                Top NFTs
+            </h5>
+        </mat-card-title>
+        <mat-card-subtitle>
+            <button mat-button [matMenuTriggerFor]="cardHeaderMenu" class="card-header-menu style-two d-inline-block border-radius">
+                Monthly
+            </button>
+            <mat-menu #cardHeaderMenu="matMenu" class="card-header-menu" xPosition="before">
+                <ul class="p-0 mt-0 mb-0 list-unstyled">
+                    <li>
+                        <button mat-menu-item>
+                            Weekly
+                        </button>
+                    </li>
+                    <li>
+                        <button mat-menu-item>
+                            Monthly
+                        </button>
+                    </li>
+                    <li>
+                        <button mat-menu-item>
+                            Yearly
+                        </button>
+                    </li>
+                </ul>
+            </mat-menu>
+        </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="table-responsive">
+            <table mat-table [dataSource]="dataSource">
+
+                <!-- NFTs Column -->
+                <ng-container matColumnDef="nft">
+                    <th mat-header-cell *matHeaderCellDef>
+                        NFTs
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="employee-info d-flex align-items-center">
+                            <div class="img rounded-circle">
+                                <img [src]="element.nft.img" class="rounded-circle" alt="user-image">
+                            </div>
+                            <div>
+                                <span class="d-block text-black fw-semibold">
+                                    {{element.nft.name}}
+                                </span>
+                                <span class="d-block text-body">
+                                    {{element.nft.seller}}
+                                </span>
+                            </div>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <!-- Volumn Column -->
+                <ng-container matColumnDef="volumn">
+                    <th mat-header-cell *matHeaderCellDef>
+                        Volumn
+                    </th>
+                    <td class="fw-semibold" mat-cell *matCellDef="let element">
+                        {{element.volumn}}
+                    </td>
+                </ng-container>
+
+                <!-- Flow Price Column -->
+                <ng-container matColumnDef="flowPrice">
+                    <th mat-header-cell *matHeaderCellDef>
+                        Flow Price
+                    </th>
+                    <td class="fw-semibold" mat-cell *matCellDef="let element">
+                        {{element.flowPrice}}
+                    </td>
+                </ng-container>
+
+                <!-- Status Column -->
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef>
+                        Status
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        <span class="trezo-badge shipped fw-semibold" *ngIf="element.status.green">
+                            {{element.status.greenText}}
+                        </span>
+                        <span class="trezo-badge fw-semibold rejected" *ngIf="element.status.red">
+                            {{element.status.redText}}
+                        </span>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            </table>
+        </div>
+    </mat-card-content>
+</mat-card>
