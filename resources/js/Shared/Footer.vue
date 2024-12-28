@@ -7,4 +7,9 @@
 </template>
 
 <script>
+export default {};
 </script>
+
+<style scoped>
+/* Add any specific styling for footer here */
+</style>
