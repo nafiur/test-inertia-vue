@@ -6,7 +6,7 @@
 
     <title inertia>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Links Of CSS File -->
+    <!-- Links Of CSS Files -->
     <link rel="stylesheet" href="{{ asset('backend/assets/css/sidebar-menu.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/assets/css/simplebar.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/assets/css/apexcharts.css') }}">
@@ -23,7 +23,8 @@
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="assets/images/favicon.png">
-    <!-- Scripts -->
+
+    <!-- Inertia.js -->
     @routes
     @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])
     @inertiaHead
@@ -31,6 +32,7 @@
 <body class="boxed-size">
     @inertia
 
+    <!-- Scripts -->
     <script src="{{ asset('backend/assets/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('backend/assets/js/sidebar-menu.js') }}"></script>
     <script src="{{ asset('backend/assets/js/dragdrop.js') }}"></script>
